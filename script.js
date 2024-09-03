@@ -26,11 +26,11 @@ function pushElements(item) {
 
 containers.forEach(container => {
   container.addEventListener('click', (event) => {
-    handleContainerClick(event.currentTarget);
+    insertFunc(event.currentTarget);
   });
 });
 
-function handleContainerClick(container) {
+function insertFunc(container) {
   if (selectedContainer) {
     moveItem(selectedContainer, container);
     selectedContainer = null;
@@ -42,11 +42,11 @@ function handleContainerClick(container) {
 }
 
 function moveItem(fromContainer, toContainer) {
-  const fromLayers = fromContainer.querySelectorAll('.container-item');
-  if (fromLayers.length === 0) return;
-  const topFromLayer = fromLayers[fromLayers.length - 1];
+  const topFromLayer = fromContainer.lastElementChild;
+  if (!topFromLayer) return;
   toContainer.appendChild(topFromLayer);
 }
+
 
 function addElement(cont) {
   const lastEl = selectedContainer.lastElementChild;
