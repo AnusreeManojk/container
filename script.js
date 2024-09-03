@@ -21,52 +21,38 @@ function pushElements(item) {
   lastInsertedElement = containerItem;
 }
 
-
-
-
 containers.forEach(container => {
   container.addEventListener('click', (event) => {
-    insertFunc(event.currentTarget);
+    currentlySelected(event.currentTarget);
   });
 });
 
-function insertFunc(container) {
+function currentlySelected(container) {
   if (selectedContainer) {
     moveItem(selectedContainer, container);
     selectedContainer = null;
   } else {
     selectedContainer = container;
   }
-
-  
 }
 
 function moveItem(fromContainer, toContainer) {
   const topFromLayer = fromContainer.lastElementChild;
-  if (!topFromLayer) return;
-  toContainer.appendChild(topFromLayer);
+  if (topFromLayer) {
+    toContainer.appendChild(topFromLayer);
+  }
 }
-
 
 function addElement(cont) {
   const lastEl = selectedContainer.lastElementChild;
 
-  if (!lastEl || !lastEl.classList.contains('container-item')) return;
+  if (lastEl && lastEl.classList.contains('container-item')) {
+    const clickedItem = document.createElement('div');
+    clickedItem.classList.add('pushed-element');
+    // clickedItem.style.backgroundColor = '#750404';
+    clickedItem.textContent = lastEl.innerText;
 
-  const clickedItem = document.createElement('div');
-  clickedItem.classList.add('pushed-element');
-  clickedItem.style.backgroundColor = '#750404';
-  clickedItem.textContent = lastEl.innerText;
-
-  selectedContainer.removeChild(lastEl);
-  cont.appendChild(clickedItem);
+    selectedContainer.removeChild(lastEl);
+    cont.appendChild(clickedItem);
+  }
 }
-
-
-
-
-
-
-
-
-
